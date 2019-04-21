@@ -1,0 +1,47 @@
+3 important case related to throw keyword:
+
+CASE 1:
+
+Test -  declares static variable equal to new object (no arg constructor is there).
+o/p --> No handling code. ArithmeticException
+RE: Exception in thread : 'main'
+
+Test2 - Declares reference variable, but not an object.
+e is AE type, also. What is the value of e? For a static 
+variable, JVM will provide default value. Default value
+for object reference is NULL. throw e == throw null.
+o/p --> RE: NullPointerException
+
+CASE 2:
+
+Test - the compiler doesn't know we are getting an ArithmeticException. --> RuntimeError
+
+Test2 - compiler sees throw, is aware that an exception will be raised. The next line is never read --> CompiletimeError: unreachable statement
+
+
+CASE 3:
+
+Test -throw keyword is applicable only for Throwable types (all 
+Exceptions and errors), not for normal Java classes. Test is not a 
+child of Throwable. If used for non-throwable object, you get a CE error.
+
+OLD VERSION
+CE: incompatible types
+found: Test
+required: Throwable
+NEWER VERSION
+CE: incompatible types
+Test cannot be converted to Throwable
+
+Test2 - Test is now Throwable type. 
+Throwable
+    |
+    Exception
+    |
+    RuntimeError
+    |
+    Test
+
+Compiler won't rise a CE error.
+o/p --> RuntimeError  - Exception in thread "main" TestException.
+    

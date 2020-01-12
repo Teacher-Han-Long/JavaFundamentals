@@ -1,0 +1,44 @@
+1. ID in the comments
+
+class Layout {                                //
+	static int s = 343;                   //
+	int x;                                //
+	{ x = 7; int x2 = 5; }		      //	
+	Layout() { x += 8; int x3 = 6; }
+	
+	void doStuff() {                      //
+		int y = 0;	              //
+		for (int z = 0; z < 4; z++) { //
+			y += z + x;
+		}
+	}
+}
+
+2. Describe Static variables
+	    Instance variables
+            Local variables
+            Block variables
+3. Look at ScopeErrors.java and ScopeErrors2.java for Examples
+
+ANSWERS:-------------------------------------------------
+1. 
+//class
+//static variable - s
+//instance variable - x
+//initialization block - x2 init block variable(flavor of local var)
+//constructor - x3 constructor variable(flavor of local var)
+//method
+//local variable  - y "method local" variable 
+//'for' code block - z is a block variable
+
+2. 
+...have the longest scope. They're created when the class is loaded,
+and survive as long as the class stays loaded in the JVM.
+
+...are the next most long-lived; they're created when a new instance
+is created, and they live until the instance is removed.
+
+...live as long as their method remains on the stack. Local vars can
+be alive and still be "out of scope".
+
+...live only as long as the code block is executing.

@@ -1,0 +1,144 @@
+1. What is a primitive literal? Few examples: ?
+
+2. 4 ways to represent integer numbers?
+
+3. As of Java 7, numeric literals can be declared using what?
+
+4. Where can you not use an underscore literal in:
+integer
+doubles or floats
+hex
+binary
+
+4.5  We can use more than 1 underscore symbol between digits. T/F?
+
+5. Binary literals can only use _ and _ and must start with __ or __.
+example?
+
+6. Octal integers use only digits _ to _.
+How do you represent integers in Octal form in Java?
+examples?
+How many digits can you have in an octal number?
+
+7. How is hex represented and why? Example?
+
+8. All 4 integer literals are defined as ___ by default, but may also be 
+specified as ____ by placing a suffix of __________after the number.
+Example?
+
+9. Valid or invalid?
+int x = 0XBeer;
+int x = 0XFace;
+int x = 0777;
+int x = 0xBeef;
+int x = 0786;
+int x = 10;
+
+10. int x = 10
+    int y = 010;
+    int z = 0X10; What are the values?
+ JVM will always display the values in what form?
+
+11. Valid or invalid?
+long l = 10L;
+int x = 10L;
+long l = 10;
+
+12.
+Is there a direct way to specify byte and short literals explicitly?
+valid or invalid?
+byte b = 128;
+short s = 32767;
+byte b = 10b;
+byte b = 127;
+short s = 32767s;
+short s = 32768;
+short s = 10S;
+
+13. Valid or not?
+a)  double d = _1_23456.78_9;
+b)  double d = 1_23456_.78_9;
+c)  double d = 1_234__56.78_9_;
+
+14. Is this legal?  float f = 10L;
+    If so, how can an 8 byte long be assigned to a 4 byte float?
+15. Can short(2 bytes) be assigned to a float(2 bytes), or vice-versa?
+    Why/why not?
+
+ANSWERS: ------------------------------------------------------
+
+
+1. source code representation of primitive data types
+'b', 42, false, 2546789.343
+Any constant value that can be assigned to a variable.
+int x = 10  |  dataType  identifier =  literal(decimal form, here)
+
+2. decimal(base 10), octal(base 8), 
+hexadecimal(base 16), (Java 7)binary(base 2)
+
+3. underscores
+
+4. beginning or end
+next to a decimal pt.
+next to an X
+next to a B
+
+4.5 True
+
+5. 0B or 0b - int b1 = 0B01010;
+
+6. 0 t0 7. By placing a zero in front of the number.
+class Octal {
+	public static void main(String[] args) {
+		int six=06;  //equals decimal 6
+		int seven=07 //equals decimal 7
+		int eight=010 //equals decimal 8
+		int nine=011  //equals decimal 9
+		System.out.println("Octal 010 = " + eight);
+	}
+}
+Up to 21 digits, not including the leading 0.
+
+7. 16 digits, not including prefix 0X/0x or optional suffix extension L.
+ 0-f. There no single-digit symbols for 10-15.
+class HexTest {
+	psvm(String[] args) {
+		int x = 0X0001;
+		int 7 = 0x7fffffff;
+		int z = 0xDeadCafe;
+		System.out.println("x = " + x + "y = " + y + " z = " + z);
+	}
+}
+
+8. int. long. A suffix of L or l after the number.
+long jo = 110599L;
+long so = 0xFFFl;
+
+9. invalid, valid, valid valid, invalid, valid
+
+10. 10, 8, 16.    Decimal form.
+
+11. valid, invalid(CE: PLP found long, required int), valid (int into long)
+
+12. No. If in the range, they will be converted implicitly.
+invalid, valid, invalid, valid, invalid, invalid, invalid
+
+13. All invalid
+
+*  byte ---> short ----\
+    1b	      2b
+			int --> long --> float --> double
+			4b	    8b	   4b          8b
+	   char ------/
+	    2b
+			integral            floating-point
+				
+8 byte long value can be assigned to 4 byte float variable because
+both are following different memory representations internally.
+float f = 10L;  ---->   f = 10.0     (valid)
+
+char/short both 2 bytes, but can't be assigned to each other.
+char is an unsigned data type, short is signed.
+16 bits represent the value  ,    only 15 bits represent the value
+char cannot hold a negative value.
+								

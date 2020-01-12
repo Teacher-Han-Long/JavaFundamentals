@@ -1,0 +1,104 @@
+
+Passing Object Reference Varibles
+----------------------------------
+1. What is the output?  Is the modify method able to modify the original
+   Dimension object?
+
+import java.awt.Dimension;
+class ReferenceTest {
+	public static void main(String[] args) {
+		Dimension d = new Dimension(5, 10);
+		ReferenceTest rt = new ReferenceTest();
+		System.out.println("Before, d.height: " + d.height);
+		rt.modify(d);
+		System.out.println("After, d.height: " + d.height):
+	}
+
+	void modify(Dimension dim) {
+		dim.height = dim.height + 1;
+		System.out.println("dim = " dim.height);
+	}
+}
+
+
+Does Java use pass-by-value semantics?
+-----------------------------------------
+2. Explain
+void bar() {
+	Foo f = new Foo();
+	doStuff(f);
+}
+void doStuff(Foo g) {
+	g.setName("Boo");
+	g = new Foo();
+}
+
+
+Passing Primitive Variables
+----------------------------
+3. What is the output?
+class ReferenceTest {
+	public static void main(String[] args) {}
+		int a = 1;
+		ReferenceTest rt = new ReferenceTest();
+		System.out.println("Before modify() a=" + a);
+		rt.modify(a);
+		System.out.println("After modify() a=" + a);
+	}
+	void modify(int number) {
+		number = number + 1;
+		System.out.println("number = " + number);
+	}
+}
+
+ANSWERS:------------------------------------------------------------------
+
+1. Before, d.height: 10
+   dim = 11
+   After, d.height: 11
+-reference variables d and dim point to the same object
+
+2. Reassigning g does not reassign f! At the end of the bar() method, two
+   Foo objects have been created: one referenced by a local var f,
+	                          one reference by local (argument) var g.
+   Because the doStuff() method has a copy of the reference variable, it 
+   has a way to get the original Foo object, for instance to call the 
+   setName() method.   BUT doStuff() method does not have a way to get to 
+   the f reference variable. So, doStuff() can change values within the 
+   object that f refers to, but doStuff() can't change the actual contents
+   (bit pattern) of f.   In other words, doStuff() can change the state of
+   the object that f refers to, but it can't make f refer to a different 
+   object.
+
+	SO, Java is actually pass by value for all variables running within
+   a single VM.  Pass-by-value means pass-by-variable-value. And that means
+   pass-by-copy-of-variable!
+
+	It makes no difference if you're passing primitive or reference
+   variables. You're always passing a copy of the bits in the variable. SO,
+   for a PRIMITIVE VARIABLE: you're passing a copy of the bits representing
+   the value. For example, if you pass an int variable with the value of 3,
+   you're passing a copy of the bits representing 3. The called method then
+   gets it's own copy of the value to do with what it likes.
+        And if you're passing an OBJECT REFERENCE VARIABLE: you're passing
+   a copy of the bits representing the reference to an object. The called 
+   method then gets its own copy of the reference variable to do with what 
+   it likes. BUT because 2 identical reference variables refer to the same
+   object, if the called method modifies the object (ex. invoking setters),
+   the object that the caller's original variable refers to has also been
+   changed.  This is not also the case with primitives. Coming soon!
+
+   The bottom line on pass-by-value: The called method can't change the 
+   caller's variable, although for the object reference variables, the called
+   method can change the object the variable referred to.
+ 
+   What's the difference between changing the var and changing the object?   
+   For object references, it means the called method can't reassign the 
+   caller's original reference variable and make it refer to a different
+   object or null. This is shown by the example in question 2.
+
+3. Before modify() a = 1
+   number = 2;
+   After modify() a = 1
+   When a primitive variable is passed to a method, it is passed by value, 
+   which means pass-by-copy-of-the-bits-in-a-variable

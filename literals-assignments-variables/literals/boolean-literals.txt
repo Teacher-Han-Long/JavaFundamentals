@@ -1,0 +1,33 @@
+1. The only allowed values for boolean data type are _ or _.
+
+2. Valid or invalid? What happens at compile time?
+boolean b = false;
+boolean b = 0;
+boolean b = True;
+boolean b = "true";
+
+3. valid or invalid?
+int x = 0;
+if (x) {
+	System.out.println("Hello");
+} else {
+	System.out.println("Hi");
+}
+
+4. 
+while (1) {
+	System.out.println("hi");
+}
+----------------------------------------------------------------------------------
+
+1. true or false
+
+2. valid
+    invalid - CE: incompatible types, found int, required boolean
+    invalid - CE: cannot find symbol........
+    invalid - CE: incompatible types, found J.L.String, required boolean
+	
+3. invalid - CE: incompatible types,  found int, require boolean
+
+4. invalid - CE: same
+    Both are valid in C.  4. will print hi repeatedly. 1 is true.

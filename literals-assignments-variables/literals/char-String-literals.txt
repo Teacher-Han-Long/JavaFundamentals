@@ -1,0 +1,129 @@
+1. 3 ways to represent Character literals
+
+2. Under the hood, characters are __ bit ________ integers, of what range?
+
+3. Will these compile? 
+	char e = -29;
+	char f = 70000;
+	
+4. How can we represent a character that can't be typed in as a literal?
+
+5. What is a string literal?
+
+6. Show 2 ways to represent a string literal.
+
+7. Strings ___  primitives, but can be represented as ________, meaning that 
+    they can be _____ directly into ______.
+	
+8. Valid or invalid?
+a)   char ch = 'a';
+b)   char ch = a;
+c)   char ch = "a";
+d)   char ch = 'ab';
+
+9. char ch = 97;   
+System.out.println(ch);
+ O/P -> ?
+ 
+10. char ch = 65536;
+System.out.println(ch);
+O/P -> ?
+
+11.
+char ch = 197;
+char ch2 = 1970;
+char ch2 = 1971;
+char ch2 = 19710;  O/P -> ?
+
+12. char ch = '\u0061'; 
+System.out.println(ch);
+O/P ->  and why?
+
+13. char ch = '\m'; 
+System.out.println(ch); O/P -> ?
+
+14. How many escape characters in Java?
+
+15. Valid or invalid?
+a)  char ch = 65536;
+b)  char ch = 0xBeer;
+c)  char ch = \uface;
+d)  char ch = '\ubeef';
+e)  char ch = '\m';
+f)   char ch = '\iface';
+
+16. Any sequence of characters between double quotes is treated as a ____________.
+--------------------------------------------------------------------------------------------------
+1. -a single character in quotes
+	 char a = 'a'; char b = '@';
+    -Unicode value of the character using Unicode notation
+	 4 digits   -  char letterN = '\u004E';
+	-number literals
+	char a = 0x892;
+	char b = 982;
+	char c = (char) 70000;
+	char d = (char) -98;
+	
+	Decimal, octal, hex all allowed. As long as within allowed range.
+
+2. 16 bit unsigned integers (0 - 65535)
+3. No. A cast is required. CE: possible lossy conversion from int to char
+4. use an escape code (backslash) -linefeed, newline, horizontal tab, backspace, quotes...
+    char c = '\"';		//a double quote
+	char d = '\n';     //a newline
+	char tab = '\t';    //a tab
+	
+5. A source code representation of a value of a String object
+
+6. String s = "Uncle Bob";
+    System.out.println("Uncle" + " Bill");
+7. Are not primitives, literals, typed directly into code
+
+8. a) ok
+b) CE: cannot find symbol
+c) CE: incompatible types found String, required char
+d) CE: unclosed character literal twice, not a statement......
+
+9. a
+10. CE: PLP  found int, required char
+11. May need to check www.unicode.org
+12. a   -    97 / 16 = 61.  Need 4 digits - 0061
+13. CE: Illegal escape character
+
+14. -8
+	\n       a newline
+	\t        horizontal tab
+	\r        carriage return
+	\b        backspace
+	\f         form feed
+	\'         single quote
+	\"         double quote
+	\\         backslash
+	
+15.
+a)  char ch = 65536;      invalid- out of range
+b)  char ch = 0xBeer;     invalid- because of 'r'
+c)  char ch = \uface;      invalid- single quotes missing
+d)  char ch = '\ubeef';     valid
+e)  char ch = '\m';			invalid- illegal escape character
+f)   char ch = '\iface';     invalid- i instead of u
+
+16. string literal
+
+*  byte ---> short -\
+    1 b			2b
+	                        int --> long --> float --> double
+							4b		8b		4b          8b
+	    char ------/
+		 2b
+								integral            floating-point
+				
+8 byte long value can be assigned to 4 byte float variable because
+both are following different memory representations internally.
+float f = 10L;  ---->   f = 10.0     (valid)
+
+char/short both 2 bytes, but can't be assigned to each other.
+char is an unsigned data type, short is signed.
+16 bits represent the value  ,    only 15 bits represent the value
+char cannot hold a negative value.
+								

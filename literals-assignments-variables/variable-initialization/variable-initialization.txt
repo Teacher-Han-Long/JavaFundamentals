@@ -1,0 +1,204 @@
+1. Can you leave local variables unitialized?
+
+Primitive and Object Type Instance Variables
+--------------------------------------------
+2. Instance variables, also called ____  ____, are defined at ____ ____.
+3. Instance variables are given a default value when?
+4. Default value for:
+   a) Object reference
+   b) byte, short, int, long
+   c) float, double
+   d) boolean
+   e) char
+
+5. What is int year, and what is it's default value?
+public class BirthDate {
+	int year;
+	public static void main(String[] args) {
+		BirthDate bd = new BirthDate();
+		bd.showYear();
+	}
+	public void showYear() {
+		System.out.println("The year is "+ year);
+	}
+}
+
+It's a good idea to initialize all vars, even if w/only default vals.
+
+Object Reference Instance Variables
+-----------------------------------
+-Open Book.java
+6. What is the output of example 1?
+7. What does a null value mean?
+8. Will the happen when we compile/run?
+9. Add a check that allows this code to run.
+
+Array Instance Variables
+-------------------------
+-rule for array default values
+
+10. An array instance variable that's declared but not explicitly initialized
+    will have a value of _____.
+
+11. If an array is initialized, what about the default values of the elements
+    contained in the array?
+
+12. If we initialize an array, object reference elements will equal ____ if 
+    not initialized individually with values. If primitives are contained in
+    an array, they will be given ______________.
+
+13. What is the output of this code?
+
+public class BirthDays {
+	static int[] year = new int[100];
+	public static void main(String[] args) {
+		for (int i = 0; i < 100; i++) {
+			System.out.println("year[" + i + "] = " + year[i]);
+		}
+	}
+}
+
+Local (Stack, Automatic) Primitives and Objects
+------------------------------------------------
+14. Local variables must be initialized before you try to use them. T/F?
+Look at examples in TimeTravel.java
+15. What happens with example 1?
+		      example 2?
+		      example 3?
+
+Look at TestLocal.java
+16. What happens here, and why?
+
+Local Object Reference
+-----------------------
+17. What happens here?
+
+import java.util.Date;
+public class TimeTravel {
+	public static void main(String[] args) {
+		Date date;
+		if (date == null) {
+			System.out.println("date is null");
+		}
+	}
+}
+
+^
+|
+18. With instance variable object references, you can get away with 
+    leaving an object reference uninitialized, as long as the code 
+    checks to make sure the reference isn't null before using it. To the 
+    compiler, null is a value. You can't use the dot operator on a null 
+    reference, because there is no object at the other end of it, but a
+    null reference is not the same as an uninitialized reference.
+    What about LOCALLY declared references?
+
+19. How can we fix 17.?
+
+Local Arrays
+-------------
+Just like any other object reference, array references within a method must
+be assigned a value before use. That just means you must declare and con-
+struct the array. You DO NOT need to explicitly initialize the elements of
+an array.  REMEMBER: Array elements are given their default values regardless
+of whether the array is declared as an instance or local variable. The array
+object itself will NOT be initialized if it's declared locally. 
+In other words, you must explicitly initialize an array reference if it's 
+declared and used within a method, but at the moment you construct an array
+object, all of it's elements are assigned their default values.
+
+Assigning One Reference Variable to Another
+--------------------------------------------
+20. What is the O/P?
+import java.awt.Dimension;
+class ReferenceTest {
+	public static void main(String[] args) {
+		Dimension a1 = new Dimension(5, 10);
+		System.out.println("a1.height = " + a1.height);
+		Dimension b1 = a1;
+                b1.height = 30;
+		System.out.println("a1.height = " + a1.height 
+				   + "after the change to b1");
+	}
+}
+
+21. How about this String object?
+class StringTest {
+	public static void main(String[] args) {
+		String x = "Intel";
+		String y = x;
+		System.out.println("String y = " + y);
+		x = x + "liJ";
+		System.out.println("y String = " + y);
+		System.out.println("x = " + x);
+	}
+}
+
+
+ANSWERS:  ------------------------------------------------
+1. Yes, but if you try to use them, CE:
+2. member variables, class level
+  The declaration is not made within a method, constructor, or any other
+  initializer block.
+3. Every time a new instance is created, unless they have been given an
+   explicit value after the object's superconstructors have completed.
+4. a) null  b) 0  c) 0.0  d) false e) '\u0000'
+5. primitive intance variable - 0
+6. The title is null.
+7. it means the reference variable is not referring to any object on the 
+   heap.
+8. Code compiles fine and runs until the last line
+   RE: Exception in thread "main" java.lang.NullPointerException at.....
+   -Reference variable title does not point to an object.
+9. String s = b.getTitle();
+   if (s != null) {
+	String t = s.toLowerCase();
+   }
+   Look back and notice that title variable has a default value of null.
+   Realize that variable s will also have a value of null.
+   Remember that s is a copy of the value of title(as returned by the 
+   getTitle() method, so if title is a null reference, s will be, too.
+10. null, just like any object reference instance variable.
+11. All array elements are given their default values-the same default vals
+    that elements of that type get when they're instance variables. Array
+    elements are ALWAYS given default values, regradless of where the array 
+    itelf is instantiated.
+12. null, their respective default values
+13. All 100 integers will have a default value of zero.
+14. True
+15. ex 1 - OK
+    ex 2 - CE: Variable year may not have been initialized
+    ex 3 - Ok. Year is initialied and day is not used, so no problem.
+
+16. CE: variable x might not have been initialized
+    The compiler can't always tell if a local variable has been initialized.
+    If we initialize within a conditional block(a code block that may not run,
+    such as an if block or for loop without a literal value of true or false
+    in the test), the compiler knows that the initialization might not happen
+    and can produce an error. 
+
+17. CE: Variable date may not have been initialized
+      If 'date' is declared static instance variable, it will be given the value null.
+	  Otherwise initialize it null as a local variable.
+18. Locally declared references can't get away with checking for null before
+    use, unless you explicitly initialize the local variable to null.
+
+19. Date date = null;
+    Instance variable references are always given a default value of null,
+    until they are explicitly initialized to something else. Local references
+    are not given a default value. They AREN'T null.  If you don't initialize
+    then they have NO value. SO, set them to null!
+
+20. 30 - with primitives, an assignment of one variable to another means the
+    contents(bit pattern) of one variable are copied into another. Object ref-
+    erence variables are the same there. The contents of a reference variable
+    are a bit pattern, so if you assign reference variable a1 to reference 
+    variable b1, the bit pattern from a1 is copied and placed in b1. 
+    If we assign an existing instance of an object to a new reference variable,
+    the 2 reference variables will hold the same BIT PATTERN - a bit pattern
+    referring to the same object on the heap. 
+21. For any other type of object, the shared object will be modified. Any time
+    we make any changes at all to a String, the VM will update the reference
+    variable to refer to a different object. The different object may or may
+    not be a new object(depends what's in the String constant pool), but it
+    will be a different object.

@@ -1,0 +1,44 @@
+You can shadow a variable in several ways.
+One way: hiding a static variable by shadowing it with a local variable.
+1. What is shadowing a variable?
+2. You can shadow a variable by declaring a local variable of the same 
+   name, either directly or as part of an argument. t/f?
+
+Look at the example in Foo.java
+3. What is the O/P? Why?
+
+Look at FooBar.java. The shadowed variable is an object reference, 
+rather than a primitive.
+4. What is the O/P? Why?
+
+ANSWERS: ---------------------------------------------------------------
+
+1. reusing a variable name that's already been declared somewhere else.
+   The effect is to hide the previously declared variable in such a way
+   that it may look as though you're using the hidden variable, but you're
+   actually using the shadowing variable. 
+   Sometimes on purpose, but usually by accident.
+   LOOK FOR SHADOWING PLAYING A ROLE IN PROBLEMS ON THE EXAM!!!!!!!!!!
+2. true
+
+3. size = 7
+   size in changeIt is 207
+   size after changeIt is 7
+   
+   The code appears to change the static size variable (inside of the 
+   changeIt() method), but because changeIt has a parameter called size, 
+   the local size variable is modified while the static size variable is 
+   untouched.
+
+4. f.myBar.barNum is 28
+   myBar.barNum in ChangeIt = 99
+   myBar.barNum in changeIt is now 420
+   f.myBar.barNum after changeIt = 99
+   
+   We can see that the shadowing variable (the local parameter myBar in 
+   changeIt()) can still affect the myBar instance variable, because the 
+   myBar parameter receives a reference to the same Bar object. BUT when 
+   the local myBar is reassigned a new Bar object, which we then modify by 
+   changing its barNum value, Foo's original myBar instance variable is 
+   untouched.
+   

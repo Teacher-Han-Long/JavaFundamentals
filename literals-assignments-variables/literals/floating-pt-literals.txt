@@ -1,0 +1,77 @@
+1. Floating-point numbers are defined as what by default?
+
+2. How do you assign a floating-point literal to a variable of type float?
+
+3. What will happen if we compile this code?
+float f = 23.457890;
+
+4. Which of these are valid/invalid, and WHY?
+double d = 110599.995011D;
+double g = 987.897;
+int x = 25,343;
+float f = 123.456F;
+double d = 123.456;
+double d = 123.456d;
+float f = 123.456D;
+
+5. How many bits/bytes in a double?
+    How many bits/bytes in a float?
+	
+6. Valid or invalid? Why?
+double d = 0123.456;
+double d = 0X123.456;
+
+7. Valid or invalid? Why? !!!!!!!!
+double d = 0786;
+double d = 0XFace;
+
+8. Valid or Invalid? Why?
+double d = 0786.0;
+double d = 0XFace.0;
+double d = 10;
+double d = 0777;
+int x = 10.0; 
+
+9. Valid or Invalid. What is the output? Why?
+double d = 1.2e3;
+System.out.println(d);
+
+10. float f  = 1.2e3;
+    float f  = 1.2e3F;
+	
+ANSWERS 	---------------------------------------------------
+
+1. Double
+2. We must use the suffix f/F
+3. CE: Possible loss of precision  found double, required float
+4. valid, valid, invalid, valid, valid, valid, invalid
+
+5.  64 bits/8 bytes
+     32 bits/4 bytes
+
+6. First is valid. Adding 0 doesn't make it octal. It's a valid decimal.
+Second is hex. invalid. CE: malformed floating point literal.
+We can specify floating point literals only in decimal form. 
+Octal/hexidecimal are N/A. 
+
+7. First is invalid- It's not a floating -pt literal. It's an octal 
+ and 8 is too large for an octal.  CE: Integer number is too large
+ Second is valid. Also not a floating-point literal. It's a valid 
+hexadecimal/integer literal which can be assigned to a double.
+
+8. valid, invalid, valid, valid, invalid
+We can assign integer literals directly to floating-point variables 
+and that integer literal can be specified in decimal, octal, 
+or hexadecimal forms.
+double d = 10;
+System.out.println(d)  O/P -> 10.0
+We CAN'T assign floating-point values to integer type
+
+9. 1200.0
+1.2e3
+= 1.2 x 10 to the 3rd
+= 1.2 x 1000
+= 1200.0
+
+10. invalid, valid
+We can specify floating-point literal in exponential form/scientific notation 

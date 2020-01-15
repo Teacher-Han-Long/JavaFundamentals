@@ -1,0 +1,269 @@
+Memory Management and Garbage Collection:
+-----------------------------------------
+Memory management- a crucial element in many types of apps.
+   -consider a program that reads in large amounts of data(from a network)
+    then writes that data into a database on a hard drive.
+a typical design- read the data into some sort of collection in memory
+		- perform some operations on the data
+		- write the data into the database
+After the data is written into the database, the collection that stored the
+data temporarily must be emptied of old data, or deleted and re-created b4
+processing the next batch.
+Might be performed thousands of times. C, C++... Not performed automatically
+-a small flaw in logic that manually empties or deletes the collection data
+ structures can allow small amounts of memory to be improperly claimed or
+ lost forever. -MEMORY LEAKS
+MEMORY LEAKS- over many thousands of iterations they can make enough memory
+              inaccessible that programs will eventually crash.
+Creating code that performs memory management cleanly and thoroughly is a 
+non-trivial and complex task. It's arguable that manual memory management can
+double the development effort for complex programs.
+1. What does Java's garbage collector provide? What is the downside?
+
+(DUE TO VAGARIES OF THE SCP-THE EXAM DEALS ONLY WITH NON-STRING OBJECTS GC)
+
+Java's Garbage Collector
+--------------------------
+it's typical for memory to be used to create a stack, heap,
+and in Java's case constant pools and method areas.
+
+2. the only part of memory that is in any way involved in the GC process is?
+3. When the GC runs, what is it's purpose?
+4. When does the GC run?
+5. When does an object become eligible for garbage collection?
+6. What do we mean by reachable object?
+7. Maintaining too many live objects, the system can run out of memory.
+   Can GC ensure that there is enough memory?
+
+Writing Code That Explicitly Makes Objects Eligible for Collection
+--------------------------------------------------------------------
+8. How can we make objects eligible for GC using code?
+
+
+Forcing Garbage Collection
+------------------------------------
+9. How can GC be forced?
+10. The GC routines that Java provides are members of the ________, 
+	a special class (called a ___ ___) that has a single object for each main program. 
+	The Runtime _____ provides a mechanism for communicating directly with the ______. 
+11. How do you get the Runtime instance?
+12. When is the only time GC is guaranteed to run?
+      What are some reasons for why no amount of free memory is guaranteed?
+
+Refer to CheckGC.java to see the effects of GC
+13. What are the 2 ways to REQUEST JVM runs GC?
+14. Which is/are valid code to get a Runtime object?
+    a) Runtime r = new Runtime();
+	b) Runtime r = Runtime.getRuntime();
+	c) System.gc();
+	d) Runtime.gc();
+	e) (new Runtime()).gc();
+15. Get a Runtime object and check how much memory total, how much available, 
+    and then request GC.
+16. Which is more recommended, System.gc(), or Runtime.getRuntime().gc()? Why?
+
+Finalization
+-----------------
+17. Where is the finalize() method defined? What is it's complete signiture?
+
+18. Can finalize() be overridden? 
+
+19. When doesn GC call finalize?
+
+20. What is the output and why? Why doesn't our valid override run?
+
+public class Test {
+	public static void main(String[] args) {		// main thread starts
+		String s = new String("Milton");
+		s = null;                                                 // s is available for GC
+		System.gc();											 // 2nd thread starts -
+        System.out.println("End of main");  		 //-bg process(daemon)
+	}																 
+	public void finalize() {
+		System.out.println("finalize method ran");
+	}
+}
+
+
+21.  How many times will finalize method be called?
+
+class Test {
+	public static void main(String[] args) {
+		Test t = new Test();
+		t.finalize();       // called like a normal method, obj. won't be destroyed
+		t.finalize();      // called like a normal method, obj. won't be destroyed
+		t = null;
+		System.gc();  // called by GC, object can be destroyed (eligible)
+		System.out.println("End of main"):
+	}
+	public void finalize() {
+		System.out.println("Finalize method called."):
+	}
+}
+
+22. What if when finalize is called, an uncaught Exception rises?
+
+                       -----------------------------------------
+23. How many times will finalize() method be called?
+
+class finalizeDemo {
+	static finalizeDemo s;
+	public static void main(String[] args) throws InterruptedException {
+		FinalizeDemo f = new FinalizeDemo();
+		System.out.println(f.hashCode());
+		f = null;                                    // available for GC
+		System.gc();							   // calls finalize() b4 destroying obj.
+		Thread.sleep(5000);
+		System.out.println(s.hashCode());
+		s = null;								   // available for GC	
+		System.gc();                            
+		Thread.sleep(10000);
+		System.out.println("End of main.");
+	}
+	public finalize() {
+		System.out.println("finalize method called.");
+		s = this;
+	}
+}
+
+24. Create a Test class. In the main method run a loop that creates Test objects. 
+	Override the finalize method  and keep count of how many times it runs. Increase
+	the number in the condition to see how many objects before the GC destroys them.
+	-We can't expect exact behavior of GC. It varies from JVM to JVM. Hence, for the 
+	following questions there are no exact answers:
+	1. Exactly when will the JVM run the GC
+	2. In which order GC identifies available objects
+	3. In which order GC destroys available objects
+	4. Whether GC destroys all eligible objects or not
+	5. What algorithm does the GC follow, etc
+
+25. What is a standard algorithm that most GC follow?
+
+26. If we continually create objects, but none are made available for GC, what will
+	eventually happen? Who is to blame? 
+27. Objects that are not being used in the program, and are not available for GC- 
+	What are these types of useless objects called?
+28. What are some 3rd party tools for identifying memory leaks?
+
+
+
+ANSWERS-------------------------------------------------------------------
+1. an automatic solution to memory management. In most cases it frees you 
+   from having to add any memory management logic to your application.
+   You can't control when it runs and when it doesn't.
+2. the heap
+3. to find and delete objects that can't be reached, so the cycle of using
+   memory and releasing it can continue. GC makes sure the heap has as much
+   free space as possible.
+4. GC is under control of the JVM. Within the program we can ask the JVM to
+   run the GC. No guarentees it will comply.
+   The JVM will typically run GC when it senses that memory is running low.
+   (maybe mark and sweep algorithm, reference counting)
+5. An object is eligible for GC when no live thread can access it. GC will 
+   consider this object as eligible for deletion, and MAY or MAY NOT delete it.
+6. a reachable reference variable that refers to the object in question.
+   If our Java program has a reference variable that refers to an object and
+   that reference variable is available to a live thread, then that object is
+   reachable.
+7. No. Only that the memory that is available will be managed as efficiently 
+   as possible.
+8. a) Nulling a reference
+   b) Re-assigning a reference variable
+   c) Isolating a reference
+
+9. Garbage collection cannot be forced. However, Java provides some methods that 
+allow you to request that the JVM perform garbage collection. 
+
+It's recommended that we never invoke System.gc() in our code. Leave it to the JVM.
+Even if gc is run, there are NO GUARANTEES all of the unused objects will be 
+removed.  Remember this!
+
+10. The GC routines that Java provides are members of the Runtime class.
+Runtime class : A special class that has a single object (a Singleton class) for each
+main program. The Runtime object provides a mechanism for communicating directly
+with the virtual machine. 
+
+11. To get the Runtime instance, you can use the method Runtime.getRuntime(), 
+which returns the Singleton. 
+Once you have the Singleton, you can invoke the garbage collector using the gc() method. 
+Alternatively you can call the same method on the System class, which has static methods 
+that can do the work of obtaining the Singleton for you. The simplest way to ask for GC 
+(just a request) is  System.gc();
+
+Theoretically, this gives us as much free memory as possible. 
+"Theorietically" because:
+1. The JVM may not have implemented this routine; The language specification allows 
+this routine to do nothing at all.
+2. Another thread might grab lots of memory right after we run the garbage collector.
+
+System.gc() is not useless, but just better than nothing. Can't be relied upon. Can't 
+guarantee that we won't run out of memory.
+
+12. About the ONLY guarantee is that if you are running low on memory, the GC will run before
+ it throws an OutOfMemoryException.
+
+13.  a) by using System class- contains a static method gc() for this purpose.
+	   b) by using Runtime class
+14. b.  Uses factory method (Runtime is a Singleton class)
+	  c.
+15. Runtime r = Runtime.getRuntime();
+	r.totalMemory();
+	r.freeMemory();
+	r.gc();
+16. System.gc() is more convenient, but Runtime object-better performance bcause
+	System class's gc() method internally calls Runtime.getRuntime().gc()
+17. finalize available to all in Object class: protected void finalize() throws Throwable
+18. can be overridden (recommended) to perform clean-up activities
+19. Just before destroying an object, GC calls finalize() meth. to perform clean-up activities. 
+Once finalize() completes, GC automatically destoys the object.
+
+20. The String object's finalize method is called, which has empty implementation.
+Just before destoying the object, the corresponding class finalize() method will be excuted.
+If we change the object to a Test object, our override will be called.
+public class Test {
+	public static void main(String[] args) {		// main thread starts
+		Test s = new Test();
+		
+21. 3 times. 
+22. If we're calling finalize(), and an uncaught Exception rises, JVM terminates our program
+ abnormally by raising that Exception. If GC calls finalize method, JVM ignores the Exception 
+ and program continues normally
+
+23. Even though an object becomes available for GC multiple times, the GC calls 
+	finalize method only once. 
+		FinalizeDemo f = new FinalizeDemo();
+		System.out.println(f.hashCode());    // 8675309 -hashCode
+		f = null;               // available for GC
+		System.gc();		 // calls finalize() b4 destroying obj.
+		Thread.sleep(5000);
+		System.out.println(s.hashCode());	// 8675309 -same hashCode
+		s = null;	         // available for GC	
+		System.gc();     // finalize method will not be called a 2nd time
+	
+24. Keep increasing the number in the condition. At a certain point there will be a memory
+	problem. The JVM runs GC, which calls the finalize method on every object separately
+	and destroys it.
+class Test {
+	static int count = 0;
+	public static void main(String[] args) {
+		for (int i = 0; i < 10; i++) {
+			Test t = new Test();
+			t = null;
+		}
+	}
+	public void finalize() {
+		System.out.println("Finalize method called." + ++count);
+	}
+}
+
+25. Every GC doesn't follow the same algorithm, but Mark and Sweep is very common.
+	Maybe 90%.
+26. OutOfMemoryError. Programmer's fault. 
+27. Memory leaks. The program will be terminated with an OutOfMemoryError. 
+	If an object is no longer required, it's highly recommended that we make that object
+	available for GC.
+28. HP OVO
+	 HP J Meter
+	 JProbe
+	 Patrol
+	 IBM Tivoli

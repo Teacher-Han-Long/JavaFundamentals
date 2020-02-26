@@ -1,0 +1,8 @@
+1. StringBuffer sb = new StringBuffer();
+
+2. StringBuffer sb = new StringBuffer(int initialCapacity);
+
+3. StringBuffer sb = new StringBuffer(String s);
+   System.out.println(sb.capacity()); -> 21 (5+16)
+	capacity = s.length() + 16
+	

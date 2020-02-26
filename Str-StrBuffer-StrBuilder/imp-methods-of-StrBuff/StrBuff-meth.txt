@@ -1,0 +1,94 @@
+public int length();
+
+public int capacity();
+
+public char charAt(int index);
+	/*
+	StringBuffer sb = new StringBuffer("swordfish");
+	System.out.println(sb.charAt(30));
+        We only have StringIndexOutOfBoundsException in Java
+	*/
+
+public void setCharAt(int index, char newChar);
+	/*
+	SB sb = new SB("Java");
+	sb.setCharAt(0, 'y');
+	System.out.println(sb);
+	*/
+
+public StringBuffer append(String s);
+	/*
+	argument can be any type-String, boolean, byte, int...
+	Overloaded methods
+	*/
+
+public StringBuffer insert(int index, String s);
+			  (int index, double d);
+			  (int index, boolean b);
+	/*
+	Also an overloaded method. Same as append, but at a designated pos.
+	StringBuffer sb = new StringBuffer("abcdefgh");
+	sb.insert(2,"xyz");
+	sb.insert(4, true);
+	sb.insert(5, 10.5);
+	*/
+
+public StringBuffer delete(int begin, int end);
+	/*
+	deletes character from first index to end -1 
+	StringBuffer sb = new StringBuffer("abcdefgh");
+	sb.delete(2,5);
+	System.our.println(sb); -> abfgh
+	*/
+
+public StringBuffer deleteCharAt(int index);
+	/*
+	StringBuffer sb = new StringBuffer("abcdefgh");
+        sb.delete(3);
+        System.our.println(sb); -> abcefgh 
+
+	*/
+
+public StringBuffer reverse(String s);
+        /*
+        StringBuffer sb = new StringBuffer("siht esreveR");
+        sb.reverse();
+        System.our.println(sb); 
+
+        */
+
+public void setLength(int length);
+        /*
+	ex. We want exactly 8 characters-no more, no less
+
+        StringBuffer sb = new StringBuffer("biryani plate");
+        sb.setLength(8);
+        System.our.println(sb); -> biryani (space included)
+
+        */
+
+public void ensureCapacity(int capacity);
+        /*
+        ex. DANGEROUS concept!:)
+	Default initial capacity is 16. What if we want to increase
+	to 1000....(increase capacity dynamically)
+        StringBuffer sb = new StringBuffer(); --> 16
+	sb.ensureCapacity(1000);
+        
+        System.out.println(sb.capacity());
+
+        */
+
+public void trimToSize();
+        /*
+        
+	StringBuffer sb = new StringBuffer();
+        sb.ensureCapacity(1000);
+	sb.append"ABC");
+	sb.trimToSize();	
+        System.our.println(sb.capacity()); 
+	
+	All extra allocated free memory will be deallocated
+        */
+
+

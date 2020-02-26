@@ -1,0 +1,40 @@
+StringBuffer 				StringBuilder
+-------------------------------------------------------------
+
+Every method is syncronized		None are syncronized
+
+One thread allowed at a time to 	Multiple threads at a
+operate on a StrBuffer obj so		time-NOT thread safe
+Thread Safe
+
+Threads required to wait to 		Threads not required to wait
+operate on an obj, so performance       to operate obj, so performance
+relatively low				relatively high
+
+introduced in 1.0v			introduced in 1.5v
+
+
+Buffer changed to Builder, synchronized removed.
+Otherwise, cut and paste.
+
+String
+-----------------------------------
+1. Content is fixed
+
+
+StringBuffer
+-----------------------------------
+2. Content is not fixed
+   Thread-safety is required
+
+StringBuilder
+-----------------------------------
+3. Content is not fixed
+   Thread-safety not desired
+
+IS STRING THREAD SAFE?
+-once we create a String Object, any changes performed on it
+ will cause a new Object to be created.
+
+ALL immutable objects in Java are thread-safe by default
+(Wrapper classes, custom immutable objects)

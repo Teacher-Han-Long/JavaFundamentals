@@ -1,0 +1,13 @@
+Methods having the same return type, any number can be chained
+(most methods in these classes)
+String, StringBuffer, StringBuilder
+
+sb.append().reverse().insert().delete()
+
+ex.
+StringBuilder sb = new StringBuilder();
+sb.append("Harpo").append("Marx").reverse().insert(5, "J");
+
+All method calls executed from left to right
+
+System.out.println(sb); -> xraMoJpraH

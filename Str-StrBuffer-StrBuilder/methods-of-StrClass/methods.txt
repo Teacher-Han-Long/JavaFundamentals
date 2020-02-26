@@ -1,0 +1,36 @@
+// Why isn't contains() in this list?
+
+1. public char charAt(int index)
+
+2. public String concat(String s)
+
+3. public boolean equals(Object o)
+   // meant for content comparison (equality of String Obj)
+
+4. public boolean equalsIgnoreCase(String s)
+   // not overriding of Object equals method
+   // Could be used for checking name and password
+   (validate user name where case is not important
+
+5. public boolean isEmpty(String s)
+
+6. public int length()
+
+7. public String replace(char old, char new)
+
+8. public String substring(int begin)
+   // from begin index to end of String
+
+9. public String substring(int begin, int end)
+   // returns substring from begin index to end -1
+
+10. public int indexOf(char c)
+
+11. public int lastIndexOf(char c)
+
+12. public String toLowerCase()
+
+13. public String toUpperCase()
+
+14. public String trim()
+    

@@ -1,0 +1,170 @@
+Map<I>
+NOT child<I> of Collection. Map= repr group of objects as Key/Value pairs.
+ip/domain
+id/Employee, etc
+
+Each Key Value pair is called an Entry.  A group of entries is a Map.
+
+Map<I> has it's own specific methods. No add();
+
+put(Object key, Object value)
+
+=================================================
+MAP INTERFACE METHODS
+
+If trying to insert an entry with a duplicate key
+the old value will be replaced with the new one.
+Return type will be old one. Otherwise - null.
+
+m.put(101, "HanLong"); --> null
+m.put(102, "Shiva"); --> null
+m.put(101, "Durga"); --> HanLong
+
+
+Add a group of Key Value pairs
+(a map) sm map add to big map...
+m.putAll(Map m)
+
+Use the key to fetch value
+m.get(key);
+
+Total key/value pair removed
+m.remove(key)
+
+Is a key available
+m.containsKey(key);
+
+"" value
+m.containsValue(value);
+
+Check if Map is empty or not
+isEmpty(m)
+
+How many key/value pairs?
+.size()
+-------------------------------------------------------------------
+
+Object put(Object key, Object value)
+
+void putAll(Map m)
+
+Object get(Object key)
+
+Object remove(Object key)
+
+boolean containsKey(Object key)
+boolean containsValue(Object value)
+
+boolean isEmpty()
+
+int size()
+
+void clear();
+
+**********************                  **************************
+
+I ONLY WANT TO GET KEYS
+Set keySet()  - it's a set, so no duplicates
+
+VALUE ONLY
+Collection values() - DUPLICATES OK. NOT A SET!
+
+ENTRY OBJECTS - a Set of Entry Objects(also no dups)
+Set entrySet()
+
+These 3 methods are called COLLECTION VIEWS OF MAP.
+******************
+                            ***********************
+Entry is part of a Map. If no Map, no Entry.
+Entry<I> is defined inside of Map<I>
+Map is considered a collection of Entry Objects.
+
+interface Map
+{
+	interface Entry
+	{       //Entry specific meths. 
+		//Can only apply on Entry Objects
+		Object getKey()
+		Object getValue()
+		Object SetValue(Object newo)
+		
+	}
+}
+
+***********************************************************************
+*************************************************************************
+
+HASHMAP  
+
+1. HashTable
+2. Insertion order not preserved. Based on HashCode of keys
+3. Duplicate Keys not allowed.
+   Duplicate Values allowed.
+4. Heterogeneous allowed for both Key and Value.
+5. null -key(once)
+	-value(any)
+6. Implements Serializable and Clonable. Not Random Access.
+7. Best if frequent operation is 
+   SEARCH
+
+//Create an empty HashMap object with a default capacity of 16.
+-16
+//default fill-ration
+0.75
+
+2. HashMap m = new HashMap(int initialCapacity);
+3. HashMap m = new HashMap(int initialCapacity, float fillRatio);
+4. HashMap m = new HashMap(Map m); //inter-conversion between Map Objects
+
+Observe the "Map Style" output:)  Areh getting?
+Based on hash code of keys. Where it goes...nobody knows...
+HashMap m = new HashMap();
+m.put("RobertPlant", 25);
+m.put("Chicago", 624);
+//2 more names
+Sout(m)  //map style {k=v, k=v..}
+
+//replaces old value and returns old value
+Sout(m.put("RobertPlant", 1000));
+//keys only
+Set s = m.keySet();
+Sout(s);
+//values only
+Collection c = m.values();
+Sout(c);
+//set of entries [k=v, k=v, ....] (Collections)viewStyle
+Set s1 = m.entrySet();
+Sout(s1);
+Iterator itr = s1.iterator();
+while(itr.hasNext())
+{
+	Map.Entry m1 = (Map.Entry)itr.next();
+	sout(m1.getKey() + "..." + m1.getValue();
+	if(m1.getKey().equals("Chicago"))
+	{
+		m1.setValue(25062444);
+	}
+}
+Sout(m); //check the value of Chicago NOW!:) wowie zowie! 
+
+************************************
+DIFFERENCES BETWEEN HASHMAP AND HASHTABLE
+
+		HashMap                     					   			HashTable
+-------------------------------------     			------------------------------------
+1. Every method - non-synch.				 Synchronized
+2. Not thread-safe									 Thread-safe 
+3. Performace relatively high					 Performance bijiao low
+VERY IMPORTANT
+4. null allowed for key/value	                 Not Applicable CE:(NPE)
+5. 1.2 Non-legacy									 1.0 Legacy
+
+****************                ********************************
+
+SYNCHRONIZED VERSION OF HASHMAP
+
+HashMap m = new HashMap();
+Collections.synchronizedMap(m);
+Map m1 = Collections.synchronizedMap(m); --> m is non-synchronized
+//m1 is Synchronized. HashMap is not synchronized by default.
+
